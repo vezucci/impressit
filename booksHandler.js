@@ -17,9 +17,9 @@ const controller = new BooksController({
 });
 
 module.exports = {
-  add: controller.add, 
-  update: controller.update,
-  delete: controller.delete,
-  get: controller.get,
-  getAll: controller.getAll
+  add: async (event) => controller.add(event), 
+  update: async (event) => controller.update(event),
+  delete: async (event) => controller.delete(event),
+  get: async (event) => controller.get(event),
+  getAll: async (event) => controller.getAll(event)
 };

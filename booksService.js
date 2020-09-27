@@ -1,7 +1,7 @@
 const uuid = require('uuid');
 
 class BooksService {
-  constructor(dynamodb, tableName) {
+  constructor({ dynamodb, tableName }) {
     this.db = dynamodb;
     this.BOOKS_TABLE_NAME = tableName;
   }
@@ -12,8 +12,6 @@ class BooksService {
     }
 
     let result = await this.db.scan(scanParams).promise();
-
-    console.log(JSON.stringify(result));
     return result.Items;
   }
 
@@ -26,8 +24,6 @@ class BooksService {
     }
 
     let result = await this.db.get(getParams).promise();
-
-    console.log(JSON.stringify(result));
     return result.Item;
   }
 
@@ -46,7 +42,6 @@ class BooksService {
   }
 
   async update(id, book) {
-    
     let updateParams = {
       TableName: this.BOOKS_TABLE_NAME,
       Key: {
@@ -66,21 +61,17 @@ class BooksService {
     }
 
     let result = await this.db.update(updateParams).promise();
-
-    console.log(JSON.stringify(result));
     return result.Item;
   }
 
   async delete(id) {
     let deleteParams = {
-      TableName: TABLE_NAME,
+      TableName: this.BOOKS_TABLE_NAME,
       Key: {
         bookUuid: id
       }
     }
-
-    const result = await this.db.delete(deleteParams).promise();
-    console.log(JSON.stringify(result));
+    await this.db.delete(deleteParams).promise();
   }
 
 }

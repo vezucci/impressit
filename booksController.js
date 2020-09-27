@@ -23,7 +23,7 @@ class BooksController {
     try {
       await this.booksService.add(data);
     } catch (err) {
-      console.log('There was an error saving a book', { err });
+      console.log('There was an error saving a book', err);
       return response(500);
     }
 
@@ -39,7 +39,7 @@ class BooksController {
       return response(400);
     }
 
-    const validationError = booksValidator(data);
+    const validationError = this.booksValidator(data);
     if (validationError) {
       return response(400, validationError.message);
     }
@@ -47,7 +47,7 @@ class BooksController {
     const bookId = event.pathParameters.bookUuid;
 
     try {
-      await booksService.update(bookId, data);
+      await this.booksService.update(bookId, data);
     } catch (err) {
       console.log('There was an error updating a book', err);
       return response(500);
@@ -60,9 +60,9 @@ class BooksController {
     const bookId = event.pathParameters.bookUuid;
 
     try {
-      await booksService.delete(bookId); 
+      await this.booksService.delete(bookId); 
     } catch (err) {
-      console.log('There was an error deleting a book', getParams);
+      console.log('There was an error deleting a book', err);
       return response(500);
     }
 
@@ -74,7 +74,7 @@ class BooksController {
 
     let book = null;
     try {
-      book = await booksService.get(bookId);
+      book = await this.booksService.get(bookId);
     } catch (err) {
       console.log('There was an error getting a book', err);
       return response(500);
@@ -90,9 +90,9 @@ class BooksController {
   async getAll() {
     let books = [];
     try {
-      books = await booksService.getAll(); 
+      books = await this.booksService.getAll(); 
     } catch (err) {
-      console.log('There was an error getting books', scanParams);
+      console.log('There was an error getting books', err);
       return response(500);
     }
 

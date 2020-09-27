@@ -3,7 +3,7 @@ const Joi = require('joi');
 const bookSchema = Joi.object({
   name: Joi.string().required(),
   authorName: Joi.string().required(),
-  releaseDate: Joi.number().integer().reuired()
+  releaseDate: Joi.number().integer().required()
 });
 
 module.exports = (data) => {

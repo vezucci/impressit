@@ -1,5 +1,5 @@
 ###
-POST https://a08dcj63k0.execute-api.us-east-1.amazonaws.com/dev/book/add
+POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/add
 
 {
   "name": "Sapiens",
@@ -8,13 +8,19 @@ POST https://a08dcj63k0.execute-api.us-east-1.amazonaws.com/dev/book/add
 }
 
 ###
-POST https://a08dcj63k0.execute-api.us-east-1.amazonaws.com/dev/book/5b2c64d0-00ec-11eb-8b5b-c5f169a46a40/update
+POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/ec8edfb0-0106-11eb-83c2-072bf7ad95a8/update
+
+{
+  "name": "Homo Deus",
+  "releaseDate": 3211,
+  "authorName": "Yuval Harari"
+}
 
 ###
-POST https://a08dcj63k0.execute-api.us-east-1.amazonaws.com/dev/book/5b2c64d0-00ec-11eb-8b5b-c5f169a46a40/delete
+POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/42d435c0-0105-11eb-8918-ff917ff6f33b/delete
 
 ### 
-GET https://a08dcj63k0.execute-api.us-east-1.amazonaws.com/dev/book/5b2c64d0-00ec-11eb-8b5b-c5f169a46a40
+GET https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/5b2c64d0-00ec-11eb-8b5b-c5f169a46a40
 
 ### 
-GET https://a08dcj63k0.execute-api.us-east-1.amazonaws.com/dev/books
+GET https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/books

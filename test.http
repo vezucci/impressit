@@ -1,0 +1,20 @@
+###
+POST https://811alf95z0.execute-api.us-east-1.amazonaws.com/dev/book/add
+
+{
+  "name": "Sapiens",
+  "releaseDate": 321,
+  "authorName": "Yuval Harari"
+}
+
+###
+POST https://811alf95z0.execute-api.us-east-1.amazonaws.com/dev/book/f9f88ff0-00d6-11eb-b4d4-215b8b63af75/update
+
+###
+POST https://811alf95z0.execute-api.us-east-1.amazonaws.com/dev/book/f9f88ff0-00d6-11eb-b4d4-215b8b63af75/delete
+
+### 
+GET https://811alf95z0.execute-api.us-east-1.amazonaws.com/dev/book/{bookUuid}
+
+### 
+GET https://811alf95z0.execute-api.us-east-1.amazonaws.com/dev/books

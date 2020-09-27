@@ -1,0 +1,87 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: impress
+# app and org for use with dashboard.serverless.com
+app: impress
+org: vzvezucci
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:service}-books-${opt:stage}
+  environment:
+    DYNAMODB_BOOK_TABLE: ${self:service}-books-${opt:stage}
+    VETAL: vezucci
+
+plugins:
+  - serverless-pseudo-parameters
+
+functions:
+  add:
+    handler: booksHandler.add
+    events:
+      - http:
+          path: book/add
+          method: post
+  update:
+    handler: booksHandler.update
+    events:
+      - http:
+          path: book/{bookUuid}/update
+          method: post	
+  delete:
+    handler: booksHandler.delete
+    events:
+      - http:
+          path: book/{bookUuid}/delete
+          method: post
+  get:
+    handler: booksHandler.get
+    events:
+      - http:
+          path: book/{bookUuid}
+          method: get
+  getAll:
+    handler: booksHandler.getAll
+    events:
+      - http:
+          path: books
+          method: get
+
+resources:
+  Resources:
+    booksTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:service}-books-${opt:stage}
+        AttributeDefinitions:
+          - AttributeName: bookUuid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: bookUuid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+

@@ -1,15 +1,14 @@
 const uuid = require('uuid');
 
-const TABLE_NAME = process.env.DYNAMODB_BOOK_TABLE;
-
 class BooksService {
-  constructor(dynamodb) {
+  constructor(dynamodb, tableName) {
     this.db = dynamodb;
+    this.BOOKS_TABLE_NAME = tableName;
   }
 
   async getAll() {
     let scanParams = {
-      TableName: TABLE_NAME
+      TableName: this.BOOKS_TABLE_NAME
     }
 
     let result = await this.db.scan(scanParams).promise();
@@ -20,7 +19,7 @@ class BooksService {
 
   async get(id) {
     let getParams = {
-      TableName: TABLE_NAME,
+      TableName: this.BOOKS_TABLE_NAME,
       Key: {
         bookUuid: id
       }
@@ -34,7 +33,7 @@ class BooksService {
 
   async add(book) {
     let putParams = {
-      TableName: TABLE_NAME,
+      TableName: this.BOOKS_TABLE_NAME,
       Item: {
         bookUuid: uuid.v1(),
         name: book.name,
@@ -49,7 +48,7 @@ class BooksService {
   async update(id, book) {
     
     let updateParams = {
-      TableName: TABLE_NAME,
+      TableName: this.BOOKS_TABLE_NAME,
       Key: {
         bookUuid: id
       },

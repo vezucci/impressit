@@ -1,110 +1,25 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const booksValidator = require('./booksValidator');
 const BooksService = require('./booksService');
+const BooksController = require('./booksController');
+const booksValidator = require('./booksValidator');
 
+const BOOKS_TABLE_NAME = process.env.DYNAMODB_BOOK_TABLE;
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const booksService = new BooksService(dynamodb);
 
-const response = (statusCode, body) => ({ statusCode, body });
+const controller = new BooksController({
+  booksService: new BooksService({ 
+    dynamodb, 
+    tableName: BOOKS_TABLE_NAME 
+  }),
+  booksValidator
+});
 
 module.exports = {
-  add: async (event, context) => {
-
-    let data = null;
-    try {
-      data = JSON.parse(event.body);
-    } catch (err) {
-      console.log('There was an error parsing the body', err);
-      return response(400);
-    }
-
-    const validationError = booksValidator(data);
-    if (validationError) {
-      return response(400, validationError.message);
-    }
-    
-    try {
-      await booksService.add(data);
-    } catch (err) {
-      console.log('There was an error saving a book', { err });
-      return response(500);
-    }
-
-    return response(201);
-  }, 
-
-  update: async (event, context) => {
-    let data = null;
-    try {
-      data = JSON.parse(event.body);
-    } catch (err) {
-      console.log('There was an error parsing the body', err);
-      return response(400);
-    }
-
-    const validationError = booksValidator(data);
-    if (validationError) {
-      return response(400, validationError.message);
-    }
-
-    const bookId = event.pathParameters.bookUuid;
-
-    try {
-      await booksService.update(bookId, data);
-    } catch (err) {
-      console.log('There was an error updating a book', err);
-      return response(500);
-    }
-
-    return response(200);
-  },
-
-  delete: async (event, context) => {
-    const bookId = event.pathParameters.bookUuid;
-
-    try {
-      await booksService.delete(bookId); 
-    } catch (err) {
-      console.log('There was an error deleting a book', getParams);
-      return response(500);
-    }
-
-    return response(200);
-  },
-
-  get: async (event, context) => {
-    const bookId = event.pathParameters.bookUuid;
-
-    let book = null;
-    try {
-      book = await booksService.get(bookId);
-    } catch (err) {
-      console.log('There was an error getting a book', err);
-      return response(500);
-    }
-
-    if (book === null) {
-      return response(404);
-    }
-
-    return response(200, JSON.stringify(book));
-  },
-
-  getAll: async (event, context) => {
-    let scanParams = {
-      TableName: process.env.DYNAMODB_BOOK_TABLE
-    }
-
-    let books = [];
-    try {
-      books = await booksService.getAll(); 
-    } catch (err) {
-      console.log('There was an error getting books', scanParams);
-      return response(500);
-    }
-
-    return response(200, JSON.stringify(books));
-  },
+  add: controller.add, 
+  update: controller.update,
+  delete: controller.delete,
+  get: controller.get,
+  getAll: controller.getAll
 };

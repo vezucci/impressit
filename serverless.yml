@@ -13,8 +13,8 @@
 
 service: impress
 # app and org for use with dashboard.serverless.com
-app: impress
-org: vzvezucci
+app: bookzz
+org: vezucci
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details

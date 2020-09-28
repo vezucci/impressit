@@ -28,10 +28,11 @@ class BooksService {
   }
 
   async add(book) {
+    const newBookUuid = uuid.v1();
     let putParams = {
       TableName: this.BOOKS_TABLE_NAME,
       Item: {
-        bookUuid: uuid.v1(),
+        bookUuid: newBookUuid,
         name: book.name,
         releaseDate: book.releaseDate,
         authorName: book.authorName
@@ -39,6 +40,7 @@ class BooksService {
     }
 
     await this.db.put(putParams).promise();
+    return newBookUuid;
   }
 
   async update(id, book) {
@@ -60,8 +62,7 @@ class BooksService {
       }
     }
 
-    let result = await this.db.update(updateParams).promise();
-    return result.Item;
+    await this.db.update(updateParams).promise();
   }
 
   async delete(id) {

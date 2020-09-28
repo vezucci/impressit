@@ -2,16 +2,15 @@
 POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/add
 
 {
-  "name": "Sapiens",
-  "releaseDate": 321,
-  "authorName": "Yuval Harari"
+  "name": "Blade's Edge",
+  "authorName": "Ivan Yefremov"
 }
 
 ###
 POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/ec8edfb0-0106-11eb-83c2-072bf7ad95a8/update
 
 {
-  "name": "Homo Deus",
+  "name": "12 Lessons for 21st century",
   "releaseDate": 3211,
   "authorName": "Yuval Harari"
 }
@@ -20,7 +19,7 @@ POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/ec8edfb0-01
 POST https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/42d435c0-0105-11eb-8918-ff917ff6f33b/delete
 
 ### 
-GET https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/5b2c64d0-00ec-11eb-8b5b-c5f169a46a40
+GET https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/book/88337b50-010d-11eb-b7ba-d9c8fc2cf522
 
 ### 
 GET https://9m1gon3xli.execute-api.us-east-1.amazonaws.com/dev/books

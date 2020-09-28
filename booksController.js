@@ -12,7 +12,7 @@ class BooksController {
       data = JSON.parse(event.body);
     } catch (err) {
       console.log('There was an error parsing the body', err);
-      return response(400);
+      return response(400, 'Invalid JSON');
     }
 
     const validationError = this.booksValidator(data);
@@ -20,14 +20,15 @@ class BooksController {
       return response(400, validationError.message);
     }
     
+    let createdId;
     try {
-      await this.booksService.add(data);
+      createdId = await this.booksService.add(data);
     } catch (err) {
       console.log('There was an error saving a book', err);
       return response(500);
     }
 
-    return response(201);
+    return response(201, createdId);
   }
 
   async update(event) {
@@ -36,7 +37,7 @@ class BooksController {
       data = JSON.parse(event.body);
     } catch (err) {
       console.log('There was an error parsing the body', err);
-      return response(400);
+      return response(400, 'Invalid JSON');
     }
 
     const validationError = this.booksValidator(data);

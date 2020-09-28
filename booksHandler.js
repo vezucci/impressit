@@ -1,8 +1,8 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const BooksService = require('./booksService');
-const BooksController = require('./booksController');
+const BooksService = require('./BooksService');
+const BooksController = require('./BooksController');
 const booksValidator = require('./booksValidator');
 
 const BOOKS_TABLE_NAME = process.env.DYNAMODB_BOOK_TABLE;
